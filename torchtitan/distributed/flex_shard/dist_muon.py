@@ -11,7 +11,7 @@ from __future__ import annotations
 import heapq
 import math
 from collections.abc import Callable, Iterable, Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from functools import partial
 from typing import Any, cast, ClassVar, NoReturn, overload
 
@@ -269,10 +269,8 @@ class DistMuon(Optimizer):
         # truthy value, so this overrides a globally configured foreach.
         foreach: bool = False
 
-        compute_sharding_by_fqn: Mapping[str, ComputeLayout] = field(
-            default_factory=dict
-        )
-        bucket_configs: Sequence[BucketConfig] = ()
+        compute_sharding_by_fqn: Mapping[str, ComputeLayout]
+        bucket_configs: Sequence[BucketConfig]
 
     def __init__(
         self,

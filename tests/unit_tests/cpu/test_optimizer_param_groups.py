@@ -205,7 +205,7 @@ class TestParamGroupConfig(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=Adam.Config(lr=0.01, betas=(0.9, 0.95), eps=1e-08),
+                    optimizer=Adam.Config(lr=0.01, betas=(0.9, 0.95), eps=1e-8),
                 ),
             ],
         )
@@ -307,9 +307,9 @@ class TestParamGroupConfig(unittest.TestCase):
                 ParamGroupConfig(
                     pattern=r".*\.bias$",
                     optimizer=AdamW.Config(
-                        lr=0.001,
+                        lr=1e-3,
                         betas=(0.9, 0.95),
-                        eps=1e-08,
+                        eps=1e-8,
                         weight_decay=0.0,
                     ),
                 ),
@@ -340,9 +340,9 @@ class TestParamGroupConfig(unittest.TestCase):
                 ParamGroupConfig(
                     pattern=r"embed_tokens\.",
                     optimizer=AdamW.Config(
-                        lr=0.0001,
+                        lr=1e-4,
                         betas=(0.9, 0.95),
-                        eps=1e-08,
+                        eps=1e-8,
                         weight_decay=0.1,
                     ),
                 ),
@@ -365,9 +365,9 @@ class TestParamGroupConfig(unittest.TestCase):
                 ParamGroupConfig(
                     pattern=r".*norm.*",
                     optimizer=AdamW.Config(
-                        lr=0.001,
+                        lr=1e-3,
                         betas=(0.9, 0.95),
-                        eps=1e-08,
+                        eps=1e-8,
                         weight_decay=0.0,
                     ),
                 ),
@@ -375,9 +375,9 @@ class TestParamGroupConfig(unittest.TestCase):
                 ParamGroupConfig(
                     pattern=r".*layers.*",
                     optimizer=AdamW.Config(
-                        lr=0.0005,
+                        lr=5e-4,
                         betas=(0.9, 0.95),
-                        eps=1e-08,
+                        eps=1e-8,
                         weight_decay=0.1,
                     ),
                 ),
@@ -400,18 +400,18 @@ class TestParamGroupConfig(unittest.TestCase):
                 ParamGroupConfig(
                     pattern=r"embed_tokens\.",
                     optimizer=AdamW.Config(
-                        lr=0.001,
+                        lr=1e-3,
                         betas=(0.85, 0.99),
-                        eps=1e-08,
+                        eps=1e-8,
                         weight_decay=0.1,
                     ),
                 ),
                 ParamGroupConfig(
                     pattern=r".*\.bias$",
                     optimizer=AdamW.Config(
-                        lr=0.001,
+                        lr=1e-3,
                         betas=(0.9, 0.999),
-                        eps=1e-08,
+                        eps=1e-8,
                         weight_decay=0.1,
                     ),
                 ),
@@ -431,7 +431,7 @@ class TestParamGroupConfig(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r"nonexistent_layer",
-                    optimizer=AdamW.Config(lr=0.001),
+                    optimizer=AdamW.Config(lr=1e-3),
                 ),
                 _DEFAULT_ADAMW,
             ],
@@ -450,11 +450,11 @@ class TestParamGroupConfig(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r".*\.bias$",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.0),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.0),
                 ),
                 ParamGroupConfig(
                     pattern=r".*norm.*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.0),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.0),
                 ),
                 _DEFAULT_ADAMW,
             ],
@@ -484,7 +484,7 @@ class TestParamGroupConfig(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r"output\.",
-                    optimizer=AdamW.Config(lr=0.001),
+                    optimizer=AdamW.Config(lr=1e-3),
                 ),
             ],
         )
@@ -501,11 +501,11 @@ class TestOptimizersContainerWithParamGroups(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r".*\.bias$",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.0),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.0),
                 ),
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.1),
                 ),
             ],
         )
@@ -534,15 +534,15 @@ class TestDCPWithParamGroups(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r".*\.bias$",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.0),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.0),
                 ),
                 ParamGroupConfig(
                     pattern=r"embed_tokens\.",
-                    optimizer=AdamW.Config(lr=0.0001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-4, weight_decay=0.1),
                 ),
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.1),
                 ),
             ],
         )
@@ -583,11 +583,11 @@ class TestMixedOptimizers(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r"output\.",
-                    optimizer=Adam.Config(lr=0.0005, betas=(0.9, 0.95), eps=1e-08),
+                    optimizer=Adam.Config(lr=5e-4, betas=(0.9, 0.95), eps=1e-8),
                 ),
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.1),
                 ),
             ],
         )
@@ -609,11 +609,11 @@ class TestMixedOptimizers(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r"output\.",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.0),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.0),
                 ),
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.1),
                 ),
             ],
         )
@@ -633,11 +633,11 @@ class TestMixedOptimizers(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r"output\.",
-                    optimizer=Adam.Config(lr=0.0005, betas=(0.9, 0.95), eps=1e-08),
+                    optimizer=Adam.Config(lr=5e-4, betas=(0.9, 0.95), eps=1e-8),
                 ),
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.1),
                 ),
             ],
         )
@@ -701,11 +701,11 @@ class TestLRSchedulerWithMixedOptimizers(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r"output\.",
-                    optimizer=AdamW.Config(lr=0.0005, weight_decay=0.0),
+                    optimizer=AdamW.Config(lr=5e-4, weight_decay=0.0),
                 ),
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.1),
                 ),
             ],
         )
@@ -723,11 +723,11 @@ class TestLRSchedulerWithMixedOptimizers(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r"output\.",
-                    optimizer=Adam.Config(lr=0.0005, betas=(0.9, 0.95), eps=1e-08),
+                    optimizer=Adam.Config(lr=5e-4, betas=(0.9, 0.95), eps=1e-8),
                 ),
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.1),
                 ),
             ],
         )
@@ -746,11 +746,11 @@ class TestLRSchedulerWithMixedOptimizers(unittest.TestCase):
             param_groups=[
                 ParamGroupConfig(
                     pattern=r"output\.",
-                    optimizer=Adam.Config(lr=0.0005, betas=(0.9, 0.95), eps=1e-08),
+                    optimizer=Adam.Config(lr=5e-4, betas=(0.9, 0.95), eps=1e-8),
                 ),
                 ParamGroupConfig(
                     pattern=r".*",
-                    optimizer=AdamW.Config(lr=0.001, weight_decay=0.1),
+                    optimizer=AdamW.Config(lr=1e-3, weight_decay=0.1),
                 ),
             ],
         )

@@ -944,7 +944,7 @@ class TestReparametrizeOptimizer(unittest.TestCase):
                 param_groups=[
                     ParamGroupConfig(
                         pattern=r".*",
-                        optimizer=AdamW.Config(lr=0.001),
+                        optimizer=AdamW.Config(lr=1e-3),
                     )
                 ],
                 implementation="for-loop",
