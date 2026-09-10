@@ -8,20 +8,12 @@ import re
 from collections import defaultdict
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
-from typing import (
-    Annotated,
-    Any,
-    cast,
-    Generic,
-    Literal,
-    overload,
-    Protocol,
-    TypeVar,
-)
+from typing import Annotated, Any, cast, Generic, Literal, overload, Protocol, TypeVar
 
 import torch
 import torch.distributed.tensor
 import torch.nn as nn
+import tyro
 from torch.distributed.algorithms._checkpoint.checkpoint_wrapper import CheckpointImpl
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.tensor import Replicate
@@ -30,8 +22,6 @@ from torchtitan.components.checkpointer.utils import canonical_fqn
 from torchtitan.config import Configurable
 from torchtitan.distributed import ParallelDims
 from torchtitan.tools.logging import logger
-
-import tyro
 
 from .base import Adam, AdamW, Optimizer
 from .utils import (
@@ -137,7 +127,6 @@ class OptimizersContainer(TorchOptimizer, Stateful, Configurable, Generic[T]):
           Only supported for Adam/AdamW. See docs/bf16_optimizer_states.md.
         - more info: https://pytorch.org/docs/stable/optim.html
         """
-
 
     optimizers: list[T]
     model_parts: list[nn.Module]
